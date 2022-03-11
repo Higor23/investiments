@@ -26,4 +26,15 @@ class InvestimentController extends Controller
     {
         return $this->repository->createNewInvestment($request->validated());
     }
+
+    public function show($id)
+    {
+        $investiment = new InvestimentResource($this->repository->getInvestiment($id));
+        
+        $currentValue = $this->repository->getCurrentValue($investiment->value, $investiment->investiment_date);
+        $investiment['current_value'] = $currentValue;
+        $investiment['income'] = $currentValue - $investiment->value;
+
+        return $investiment;
+    }
 }

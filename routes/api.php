@@ -6,12 +6,6 @@ use App\Http\Controllers\Api\{
 
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/investments', [InvestimentController::class, 'index']);
-Route::post('/investments', [InvestimentController::class, 'store']);
-
-Route::get('/', function () {
-    return response()->json([
-        'success' => true
-    ]);
-});
+Route::get('/', [InvestimentController::class, 'index']);
+Route::post('/investiment', [InvestimentController::class, 'store']);
+Route::get('/investiment/{id}', [InvestimentController::class, 'show']);
