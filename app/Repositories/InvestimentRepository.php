@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Investiment;
 use DateTime;
 
+use function Psy\debug;
+
 class InvestimentRepository
 {
   protected $entity;
@@ -29,6 +31,14 @@ class InvestimentRepository
     return $this->entity->findOrFail($identify);
   }
 
+  public function update(array $data, int $id)
+  {
+    $investiment = $this->entity->findOrFail($id);
+    $data['id'] = $investiment->id;
+
+    return $investiment->update($data);
+  }
+
   public function getCurrentValue(float $value, string $date)
   {
     $investimentTime = self::getInvestimentTime($date);
@@ -45,13 +55,26 @@ class InvestimentRepository
     $dateNow = new DateTime(date("Y-m-d"));
     $today = (int) $dateNow->format('d');
     $diffTime = $dateInvestiment->diff($dateNow);
+    $daysToMonth = self::daysToMonth($diffTime->days);
 
-    if($today >= $dayInvestiment and $diffTime->d > 0) {
-      $time = (int) $diffTime->m;
-      return $time;
+    if($today >= $dayInvestiment){
+      return $daysToMonth;
     }
-    $time = ((int) $diffTime->m) - 1;
+    $time = $daysToMonth - 1; 
+
+    if($time < 0){
+      $time = 0;
+    }
     return $time;
+  }
+
+  public static function daysToMonth(int $days)
+  {
+    if($days < 30){
+      return 0;
+    }
+    $months = (int) ($days / 30);
+    return $months;
   }
 
   public static function getIncome(float $value, int $investimentTime)
@@ -62,7 +85,7 @@ class InvestimentRepository
       $i = 0;
 
       while($i < $investimentTime){
-        $value = number_format(($value * 0.52 + $value), 2, '.', '');
+        $value = number_format(($value * 0.0052 + $value), 2, '.', '');
         $finalValue = $value;
         $i++;
       }

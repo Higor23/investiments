@@ -24,7 +24,7 @@ class InvestimentController extends Controller
 
     public function store(StoreInvestiment $request)
     {
-        return $this->repository->createNewInvestment($request->validated());
+         return $this->repository->createNewInvestment($request->validated());
     }
 
     public function show($id)
@@ -33,8 +33,9 @@ class InvestimentController extends Controller
         
         $currentValue = $this->repository->getCurrentValue($investiment->value, $investiment->investiment_date);
         $investiment['current_value'] = $currentValue;
-        $investiment['income'] = $currentValue - $investiment->value;
+        $investiment['income'] =  (float) number_format($currentValue - $investiment->value, 2, '.', '');
 
         return $investiment;
     }
+
 }

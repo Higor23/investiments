@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\{
-    InvestimentController
+    InvestimentController,
+    WithdrawalController
 };
 
 use Illuminate\Support\Facades\Route;
@@ -9,3 +10,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [InvestimentController::class, 'index']);
 Route::post('/investiment', [InvestimentController::class, 'store']);
 Route::get('/investiment/{id}', [InvestimentController::class, 'show']);
+Route::post('/withdrawal/', [WithdrawalController::class, 'store']);
