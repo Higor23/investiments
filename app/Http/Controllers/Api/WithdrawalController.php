@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class WithdrawalController extends Controller
 {
-    
     protected $repository;
 
     public function __construct(WithdrawalRepository $withdrawalRepository)
