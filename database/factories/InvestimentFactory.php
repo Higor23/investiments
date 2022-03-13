@@ -25,7 +25,7 @@ class InvestimentFactory extends Factory
         return [
             'user_id' => User::factory(),
             'value' => $this->faker->numerify('####.##'),
-            'investiment_date' => '2022-03-10'
+            'investiment_date' => '2022-03-01'
         ];
     }
 }

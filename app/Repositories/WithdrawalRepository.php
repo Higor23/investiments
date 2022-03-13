@@ -17,12 +17,20 @@ class WithdrawalRepository
 
     public function saveWithdrawal(array $data)
     {
-
         $idInvestiment = $data['investiment_id'];
         $investiment = $this->investiment->getInvestiment($idInvestiment);
+        
+        if($investiment->withdraw == "y"){
+            return [
+                'status'  => 'error',
+                'message' => 'Withdrawal has already been carried out for this investment'
+            ];
+        }
+
         $verifyInvestimentDateInvert = self::getInvestimentTimeYear($investiment->investiment_date);
-        $verifyDateWithdrawal = self::verifyDateWithdrawal($investiment->investiment_date);
-        if ($verifyInvestimentDateInvert->invert === 1 or $verifyDateWithdrawal === 1) {
+        $verifyDateWithdrawal = self::verifyDateWithdrawal($investiment->investiment_date, $data['withdraw_date']);
+
+        if ($verifyInvestimentDateInvert->invert == true or $verifyDateWithdrawal == true) {
             return [
                 'status'  => 'error',
                 'message' => 'The withdrawal date cannot be earlier than the investment date or later than today.'
@@ -66,12 +74,12 @@ class WithdrawalRepository
         return $dateInvestiment->diff($dateNow);
     }
 
-    public static function verifyDateWithdrawal(string $date)
+    public static function verifyDateWithdrawal(string $dateInvestiment, string $dateWithdrawal)
     {
         $result = false;
         $dateNow = date("Y-m-d");
-        if ($date > $dateNow) {
-            $result = true;
+        if ((strtotime($dateInvestiment) > strtotime($dateWithdrawal)) or (strtotime($dateWithdrawal) > strtotime($dateNow))) {
+            return true;
         }
         return $result;
     }
