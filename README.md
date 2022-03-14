@@ -1,43 +1,20 @@
-
-# Setup Docker Para Projetos Laravel
-[Assine a Academy, e Seja VIP!](https://academy.especializati.com.br)
-
 ### Passo a passo
-Clone Repositório
+
+Criar o Arquivo .env
 ```sh
-git clone https://github.com/especializati/setup-docker-laravel.git my-project
-cd my-project/
-```
 
-
-Alterne para a branch laravel 8.x
-```sh
-git checkout laravel-8
-```
-
-
-Remova o versionamento
-```sh
-rm -rf .git/
-```
-
-
-Crie o Arquivo .env
-```sh
-cd example-project/
 cp .env.example .env
 ```
 
-
-Atualize as variáveis de ambiente do arquivo .env
+Atualizar as variáveis de ambiente do arquivo .env
 ```dosini
-APP_NAME=EspecializaTi
-APP_URL=http://localhost:8180
+APP_NAME=Produtos
+APP_URL=http://localhost:8280
 
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
-DB_DATABASE=nome_que_desejar_db
+DB_DATABASE=investiment
 DB_USERNAME=root
 DB_PASSWORD=root
 
@@ -50,30 +27,39 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-
-Suba os containers do projeto
+Subir os containers do projeto
 ```sh
 docker-compose up -d
 ```
 
-
 Acessar o container
 ```sh
-docker-compose exec laravel_8 bash
+docker-compose exec produtos bash
 ```
-
 
 Instalar as dependências do projeto
 ```sh
 composer install
 ```
 
-
 Gerar a key do projeto Laravel
 ```sh
 php artisan key:generate
 ```
+Acessar o PhpmyAdmin em [http://localhost:8081](http://localhost:8081) informando o mesmo usuário(root) e senha(root) utilizado no arquivo .env.
 
+Criar e preencher as tabelas no banco de dados
+```sh
+php artisan migrate --seed
+```
 
-Acesse o projeto
-[http://localhost:8180](http://localhost:8180)
+Rodar os arquivos de teste
+```sh
+php artisan test
+```
+
+### Documentação da Api
+link: http://localhost:8280/docs
+
+### Tecnologias Utilizadas
+O projeto foi construído com o framework Laravel 8. Escolhi esta tecnologia por já estar familiarizado com a mesma e por ela ser muito efetiva na construção de uma api. 
