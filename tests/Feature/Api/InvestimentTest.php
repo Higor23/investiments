@@ -12,7 +12,7 @@ class InvestimentTest extends TestCase
 
     public function test_list_investiments()
     {
-        $response = $this->getJson('/', $this->defaultHeaders);
+        $response = $this->getJson('/investiments', $this->defaultHeaders);
         // $response->dump();
         $response->assertStatus(200);
     }
