@@ -8,7 +8,7 @@ cp .env.example .env
 
 Atualizar as variáveis de ambiente do arquivo .env
 ```dosini
-APP_NAME=Produtos
+APP_NAME=Investiment
 APP_URL=http://localhost:8280
 
 DB_CONNECTION=mysql
@@ -34,7 +34,7 @@ docker-compose up -d
 
 Acessar o container
 ```sh
-docker-compose exec produtos bash
+docker-compose exec investiment bash
 ```
 
 Instalar as dependências do projeto
